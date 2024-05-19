@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-app
+  template:
+    metadata:
+      labels:
+        app: java-app
+    spec:
+      containers:
+        - name: java-container
+          image: rodybothe2/java-app-bootcamp:v1.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_USER
+              value: admin
+            - name: DB_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: java-configmap
+                  key: DB_SERVER
+            - name: DB_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: java-secret
+                  key: DB_PWD
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: java-configmap
+                  key: DB_NAME
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-service
+spec:
+  selector:
+    app: java-app
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30005

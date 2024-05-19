@@ -1,0 +1,12 @@
+---
+- name: nginx webserver
+  hosts: webserver
+  tasks:
+    - name: install nginx
+      apt:
+        name: nginx
+        state: latest
+    - name: stop nginx server
+      service:
+        name: nginx
+        state: stopped

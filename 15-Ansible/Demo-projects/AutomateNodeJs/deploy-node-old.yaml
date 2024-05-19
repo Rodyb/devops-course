@@ -1,0 +1,70 @@
+---
+- name: install node and npm
+  hosts: 159.223.15.47
+  tasks:
+    - name: Update apt repo and cache
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+    - name: Install nodejs and npm
+      apt:
+        pkg:
+          - nodejs
+          - npm
+- name: Create deploy user
+  hosts: 159.223.15.47
+  tasks:
+    - name: Create new linux user
+      user:
+        name: rody
+        comment: Rody Admin
+        group: admin
+      register: user_creation_result
+    - debug: msg={{user_creation_result}}
+
+- name: Deploy nodejs app
+  hosts: 159.223.15.47
+  become: True
+  become_user: rody
+  tasks:
+    - name: Unpack tar
+      unarchive:
+        src: /Users/rodybothe/Documents/devops-course-nana/15-Ansible/Demo-projects/AutomateNodeJs/nodejs-app-1.0.0.tgz
+        dest: /home/rody/
+    - name: Install dependencies
+      npm:
+        path: /home/rody/package
+    - name: Start the application
+      command:
+        chdir: /home/rody/package/app/
+        cmd: node server
+      async: 1000
+      poll: 0
+    - name: Ensure app is running
+      shell: ps aux | grep node
+      register: app_status
+    - debug: msg={{app_status.stdout_lines}}
+#    - name: Run node server and capture output
+#      shell:
+#        cmd: "node server > /tmp/node_output.txt"
+#        chdir: /root/package/app/
+#      register: node_output
+#      async: 1000
+#      poll: 0
+#      ignore_errors: true
+#    - name: Read contents of node output file
+#      slurp:
+#        src: /tmp/node_output.txt
+#      register: node_output_file
+#    - set_fact:
+#        node_output_content: "{{ node_output_file.content | b64decode }}"
+#    - name: Print node output content
+#      debug:
+#        var: node_output_content
+#    - assert:
+#        that:
+#          - "'app listening on port 3000!' in node_output_content"
+#        fail_msg: "The required message is not present in the output of 'node server' command."
+#      when: node_output_content is defined
+#
+
+
+

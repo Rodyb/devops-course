@@ -1,0 +1,90 @@
+version: '3'
+services:
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus_container
+    ports:
+      - 8081:8081
+      - 8085:8085
+    networks:
+      - my_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      interval: 30s
+      retries: 5
+
+  run_import_scripts:
+    container_name: import_scripts_into_nexus
+    build:
+      context: ..
+      dockerfile: Dockerfile_nexus
+    environment:
+      - NEXUS_ADMIN=${NEXUS_ADMIN}
+      - NEXUS_PASSWORD=${NEXUS_PASSWORD}
+    volumes:
+      - ./script.sh:/opt/sonatype/script.sh
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./Dockerfile:/opt/sonatype/Dockerfile
+    depends_on:
+      nexus:
+        condition: service_healthy
+    command: bash -c "/opt/sonatype/script.sh"
+    networks:
+      - my_network
+
+  java:
+    image: rodybothe2/java-app-bootcamp:v1.0.0
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PWD=${DB_PWD}
+      - DB_SERVER=mysql
+      - DB_NAME=${DB_NAME}
+    ports:
+      - 8080:8080
+    container_name: java
+    depends_on:
+      mysql:
+        condition: service_healthy
+      run_import_scripts:
+        condition: service_completed_successfully
+    networks:
+      - my_network
+
+  mysql:
+    image: mysql:latest
+#    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysql
+    depends_on:
+      run_import_scripts:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    environment:
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PWD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PWD}
+      - MYSQL_DATABASE=${DB_NAME}
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - my_network
+
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+      - PMA_HOST=mysql
+    ports:
+      - 8083:80
+    container_name: phpmyadmin
+    networks:
+      - my_network
+
+volumes:
+  mysql:
+
+networks:
+  my_network:

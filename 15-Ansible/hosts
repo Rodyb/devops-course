@@ -1,0 +1,7 @@
+[webserver]
+157.245.75.110
+159.223.15.47
+
+[webserver:vars]
+ansible_ssh_private_key_file=~/.ssh/digital_ocean_macbook
+ansible_user=root

@@ -1,0 +1,1 @@
+159.223.15.47 ansible_ssh_private_key_file=~/.ssh/digital_ocean_macbook ansible_user=root

@@ -1,0 +1,7 @@
+# .npmignore
+*
+!package.json
+!package-lock.json
+!app/
+npm_hosted.sh
+nexus_credentials.env

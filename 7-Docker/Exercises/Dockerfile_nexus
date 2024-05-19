@@ -1,0 +1,17 @@
+FROM alpine:latest
+
+# Install required dependencies
+RUN apk update && apk add --no-cache wget ca-certificates
+RUN apk add --no-cache bash
+RUN apk add --no-cache curl
+
+# Install Docker using the official Alpine Linux package
+RUN wget -O /tmp/docker.tgz https://download.docker.com/linux/static/stable/x86_64/docker-20.10.7.tgz && \
+    tar -xzf /tmp/docker.tgz -C /tmp && \
+    mv /tmp/docker/* /usr/bin && \
+    rm -rf /tmp/docker.tgz /tmp/docker
+
+# Copy the script
+COPY script.sh /opt/sonatype/script.sh
+COPY Dockerfile /opt/sonatype/Dockerfile
+CMD [ "sh", "/opt/sonatype/script.sh" ]
