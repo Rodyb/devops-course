@@ -28,11 +28,10 @@ resource "aws_security_group" "allow_ssh" {
   }
 }
 
-# Create an EC2 instance and associate it with the security group
 resource "aws_instance" "example" {
-  ami           = "ami-08188dffd130a1ac2"  # Amazon Linux 2 AMI ID (change if needed)
+  ami           = "ami-08188dffd130a1ac2"
   instance_type = "t2.micro"
-  key_name      = "docker-server"  # Change to your key pair name
+  key_name      = "docker-server"
   security_groups = [aws_security_group.allow_ssh.name]
 
   tags = {
@@ -59,7 +58,7 @@ resource "null_resource" "wait_for_instance" {
   depends_on = [aws_instance.example]
 }
 
-# Run the Ansible playbook after the instance is ready
+# Run the Ansible playbook
 resource "null_resource" "run_ansible" {
   provisioner "local-exec" {
     command = <<EOT
@@ -73,7 +72,6 @@ resource "null_resource" "run_ansible" {
   depends_on = [null_resource.wait_for_instance]
 }
 
-# Output the instance's public IP
 output "instance_ip" {
   value = aws_instance.example.public_ip
 }

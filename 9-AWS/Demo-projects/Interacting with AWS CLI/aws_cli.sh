@@ -16,7 +16,7 @@ echo "Creating SSH Key Pair..."
 aws ec2 create-key-pair --key-name $KEY_NAME --query 'KeyMaterial' --output text > $KEY_NAME.pem
 chmod 400 $KEY_NAME.pem
 
-# Create a Security Group
+# Create Security Group
 echo "Creating Security Group..."
 GROUP_ID=$(aws ec2 create-security-group --group-name $SECURITY_GROUP_NAME --description "My security group" --query 'GroupId' --output text)
 aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 22 --cidr 0.0.0.0/0
