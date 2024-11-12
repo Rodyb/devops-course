@@ -1,0 +1,61 @@
+#!/usr/bin.env groovy
+
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+    environment {
+        IMAGE_NAME = 'rodybothe2/demo-app:java-maven-2.0'
+    }
+    stages {
+        stage("build app") {
+            steps {
+                echo 'build app jar...'
+                buildJar();
+            }
+        }
+        stage("build image") {
+            steps {
+                script {
+                    echo "Building docker image..."
+                    buildImage(env.IMAGE_NAME)
+                    dockerLogin()
+                    dockerPush(env.IMAGE_NAME)
+                }
+            }
+        }
+
+       stage('Deploy to EC2') {
+            steps {
+                script {
+                    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
+                    def ec2Instance = "ec2-user@3.121.174.25"
+
+                    sshagent(['ec2-user']) {
+                        sh "scp -o StrictHostKeyChecking=no server-cmds.sh docker-compose.yml ${ec2Instance}:~/"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yml ${ec2Instance}:~/"
+                        sh "ssh -tt -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
+                    }
+                }
+            }
+        }
+    }
+}
+
+def buildJar() {
+    sh "mvn clean package"
+}
+
+def buildImage(imageName) {
+    sh "docker build -t ${imageName} ."
+}
+
+def dockerLogin() {
+    withCredentials([usernamePassword(credentialsId: 'docker-registry-creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+        sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+    }
+}
+def dockerPush(imageName) {
+    sh "docker push ${imageName}"
+}
