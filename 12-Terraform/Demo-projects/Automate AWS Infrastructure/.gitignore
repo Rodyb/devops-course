@@ -1,14 +1,15 @@
-# Ignore terraform state files
+# Terraform state files
 *.tfstate
-*.tfstate.backup
+*.tfstate.*
+*.backup
 .terraform/
 
-# Ignore variable files that might contain sensitive data
-project-vars
+# Terraform configuration lock file
+*.lock.hcl
+
+# Sensitive variable files
 terraform.tfvars
 
-# General ignores for backup files and system files
-*.lock.hcl
-*.backup
+# Other files typically ignored
 .DS_Store
 Thumbs.db
