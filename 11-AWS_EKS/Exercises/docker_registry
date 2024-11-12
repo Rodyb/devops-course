@@ -1,7 +1,0 @@
-#!/bin/bash
-
-kubectl create secret docker-registry my-registry-key \
---docker-server=docker.io \
---docker-username=dockerusername \
---docker-password=dockerpassword
-

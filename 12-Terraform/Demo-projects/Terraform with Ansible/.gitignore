@@ -1,6 +1,0 @@
-# Ignore Terraform providers
-**/.terraform/providers/
-**/.terraform/*.zip
-**/.terraform/*.tar.gz
-**/.terraform/*.tgz
-**/.terraform/*.rar
