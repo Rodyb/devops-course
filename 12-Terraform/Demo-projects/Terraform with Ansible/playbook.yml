@@ -1,0 +1,28 @@
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: Update and upgrade yum packages
+      yum:
+        name: "*"
+        state: latest
+        update_cache: yes
+
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install Node.js
+      shell: curl -sL https://rpm.nodesource.com/setup_22.x | sudo bash -
+
+    - name: Install Node.js and npm
+      yum:
+        name: nodejs
+        state: present
