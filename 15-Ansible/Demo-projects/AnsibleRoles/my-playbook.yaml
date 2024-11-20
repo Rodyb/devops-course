@@ -70,5 +70,5 @@
   become_user: rodyb
   vars_files:
     - project-vars
-  tasks:
+  roles:
     - start_containers
