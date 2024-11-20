@@ -74,7 +74,7 @@
   tasks: 
     - name: Copy docker compose
       copy: 
-        src: /Users/rodybothe/Documents/devops-course-nana/bootcamp-java-mysql-project/docker-compose-full.yaml
+        src: /Users/rodybothe/Documents/devops-course-nana/bootcamp-java-mysql-project/docker-compose.yaml
         dest: /home/ec2-user/docker-compose.yaml
     - name: Docker login
       docker_login: 
