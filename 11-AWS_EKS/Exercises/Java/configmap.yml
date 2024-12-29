@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: java-configmap
+data:
+  DB_SERVER: mysql-service
+  DB_NAME: rody
+  DB_USER: admin
