@@ -1,0 +1,14 @@
+[webserver]
+157.245.75.110
+161.35.88.101
+
+[webserver:vars]
+ansible_ssh_private_key_file=~/.ssh/digital_ocean_macbook
+ansible_user=root
+
+[aws]
+3.121.174.25
+
+[aws:vars]
+ansible_ssh_private_key_file=~/.ssh/docker-server.pem
+ansible_user=ec2-user

@@ -1,0 +1,3 @@
+location: /Users/rodybothe/Documents/devops-course-nana/15-Ansible/Demo-projects/AutomateNodeJs/nodejs-app
+version: 1.0.0
+destination: home/rody
