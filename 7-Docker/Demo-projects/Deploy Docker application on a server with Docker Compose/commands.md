@@ -1,0 +1,6 @@
+- scp $PWD/docker-compose.yaml root@51.158.156.179:/home/rodybothe/
+- ssh root@51.158.156.179:/home/rodybothe/
+- docker login rodybothe2 -u rodybothe2 -p <some pass>
+- docker pull rodybothe2/node-app:1.0
+- cd /home/rodybothe
+- docker-compose pull
