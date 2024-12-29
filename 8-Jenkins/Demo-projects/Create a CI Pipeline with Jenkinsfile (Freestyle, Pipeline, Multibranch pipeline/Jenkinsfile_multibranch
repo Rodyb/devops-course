@@ -1,0 +1,42 @@
+def gv
+
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+    stages {
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
+        stage("build") {
+            when {
+                expression {
+                    BRANCH_NAME == "master"
+
+                }
+            }
+            steps {
+                script {
+                    echo 'Building the application..'
+                }
+            }
+        }
+        stage("deploy") {
+            when {
+                expression {
+                    BRANCH_NAME == "master"
+                }
+            }
+            steps {
+                script {
+                    echo 'Deploy the application..'
+                }
+             }
+        }
+    }
+}
