@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+    environment {
+        KUBECONFIG = '/var/jenkins_home/.kube/kube.yaml'
+    }
+    stages {
+        stage('Kubernetes Test') {
+            steps {
+                sh 'kubectl get nodes'
+            }
+        }
+    }
+}
