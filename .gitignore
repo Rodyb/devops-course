@@ -1,0 +1,41 @@
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.idea/
+*.sublime-workspace
+*.sublime-project
+.vscode/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.bak
+
+# Python specific
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+venv/
+
+# Node.js specific
+node_modules/
+npm-debug.log*
+
+# Ignore Terraform state and backups
+*.tfstate
+*.tfstate.backup
+
+# Ignore Ansible Vault files (if applicable)
+*.vault.yml
+
+# Miscellaneous
+*.out
+*.err
+*.class
+*.exe
+*.dll
