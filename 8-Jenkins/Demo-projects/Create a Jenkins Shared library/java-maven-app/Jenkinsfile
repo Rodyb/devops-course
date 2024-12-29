@@ -1,0 +1,45 @@
+#!/usr/bin/env groovy
+library identifier: 'jenkins-shared-library@master'
+@Library('jenkins-shared-library@2.0') _
+
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+    environment {
+        IMAGE_TAG = 'rodybothe2/demo-app:jma-3.0'
+    }
+    stages {
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
+        stage("build jar") {
+            steps {
+                script {
+                    buildJar()
+                }
+            }
+        }
+        stage("build and push image") {
+            steps {
+                script {
+                    buildImage(IMAGE_TAG)
+                    dockerLogin()
+                    dockerPush(IMAGE_TAG)
+                }
+            }
+        }
+        stage("deploy") {
+            steps {
+                script {
+                    gv.deployApp()
+                }
+            }
+        }
+    }
+}
