@@ -1,0 +1,15 @@
+## Create server on Digital Ocean droplet
+- Go to digital ocean and login
+- Create droplet
+- Select region
+- Select OS to install
+- Choose droplet size
+- Add an SSH key to the droplet
+- Add a tag to the droplet
+- On local machine `gradle build`
+- install java `apt install openjdk-8-jre-headless`
+- Verify you can access the droplet `ssh root@<ip>`
+- `scp -v -i ~/.ssh/digital_ocean_macbook build/libs/java-react-example.jar root@157.245.75.110:/root`
+- Open port `7071`
+- Run the command: `java -jar java-react-example.jar`
+- Go to the the ip address:7071
