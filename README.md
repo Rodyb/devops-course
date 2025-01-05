@@ -26,4 +26,3 @@ Every chapter consists of the following files:
 
 ---
 
-This keeps it short and simple while providing a brief explanation of each module. Let me know if you’d like any adjustments!
