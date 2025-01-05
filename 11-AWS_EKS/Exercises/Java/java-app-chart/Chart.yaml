@@ -1,5 +1,0 @@
-# Chart.yaml
-apiVersion: v2
-name: java-app-chart
-description: A Helm chart for deploying Java App
-version: 0.1.0

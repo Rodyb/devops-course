@@ -49,8 +49,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'gitlab-credentials', passwordVariable: 'PASS')])
-                    sh 'git config --global user.email "jenkins@example.com"'
-                    sh 'git config --global user.name "jenkins"'
+                    sh 'git config --global user.email "rody....@gmail.com"'
+                    sh 'git config --global user.name "rody"'
 
                     sh 'git status'
                     sh 'git branch'
