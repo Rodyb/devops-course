@@ -1,9 +1,10 @@
 ##  Create Docker repository on Nexus and push to it
-- Install nexus on server: http://157.245.75.110:8083
+- Install nexus on server: <ip>:8083
 - Update docker bearer token in Nexus "Docker realm"
-- docker login to 157.245.75.110:8083
-- docker tag <some tag> 157.245.75.110:8083:/<some tag>
-- docker push 157.245.75.110:8083:/<some tag>
+- Select http instead of https
+- docker login to <ip>:8083
+- docker tag <some tag> <ip>:8083:/<some tag>
+- docker push <ip>:8083:/<some tag>
 
 ``{
 "builder": {
@@ -12,6 +13,6 @@
 "enabled": true
 }
 },
-"insecure-registries" : ["http://157.245.75.110:8083"]
+"insecure-registries" : ["<ip>:8083"]
 "experimental": false
 }``

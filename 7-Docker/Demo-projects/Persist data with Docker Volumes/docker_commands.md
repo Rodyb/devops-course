@@ -4,6 +4,6 @@
   db-data ``
 - use it in the docker compose file:
 ``db-data:/var/lib/mysql/data``
-
+- the volume will now store the changes after closing the containers
 
 
