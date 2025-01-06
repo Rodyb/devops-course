@@ -12,8 +12,6 @@ spec:
       labels:
         app: emailservice
     spec:
-      nodeSelector:
-        kubernetes.io/arch: arm64
       containers:
         - name: service
           image: gcr.io/google-samples/microservices-demo/emailservice:v0.8.0
@@ -52,8 +50,6 @@ spec:
       labels:
         app: recommendationservice
     spec:
-      nodeSelector:
-        kubernetes.io/arch: arm64
       containers:
         - name: service
           image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.8.0
@@ -89,8 +85,6 @@ spec:
       labels:
         app: productcatalogservice
     spec:
-      nodeSelector:
-        kubernetes.io/arch: arm64
       containers:
         - name: service
           image: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.8.0
@@ -124,8 +118,6 @@ spec:
       labels:
         app: paymentservice
     spec:
-      nodeSelector:
-        kubernetes.io/arch: arm64
       containers:
         - name: service
           image: gcr.io/google-samples/microservices-demo/paymentservice:v0.8.0
@@ -159,8 +151,6 @@ spec:
       labels:
         app: cartservice
     spec:
-      nodeSelector:
-        kubernetes.io/arch: arm64
       containers:
         - name: service
           image: gcr.io/google-samples/microservices-demo/cartservice:v0.8.0
@@ -196,8 +186,6 @@ spec:
       labels:
         app: frontend
     spec:
-      nodeSelector:
-        kubernetes.io/arch: arm64
       containers:
         - name: service
           image: gcr.io/google-samples/microservices-demo/frontend:v0.8.0
